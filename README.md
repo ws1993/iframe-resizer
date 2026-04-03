@@ -1,107 +1,79 @@
-# iFrame Resizer V4
-
-[![NPM version](https://badge.fury.io/js/iframe-resizer.svg)](http://badge.fury.io/js/iframe-resizer)
+<br><p align="center">
+[<img src="https://iframe-resizer.com/logo-full.svg" alt="iframe-reizer" title="" width="90%" style="max-width:90%;margin-bottom: -20px">](https://iframe-resizer.com)
+</p><br>
+ <!--
+[![npm version](https://badge.fury.io/js/@iframe-resizer%2Fcore.svg)](https://badge.fury.io/js/@iframe-resizer%2Fparent)
 [![NPM Downloads](https://img.shields.io/npm/dm/iframe-resizer.svg)](https://npm-stat.com/charts.html?package=iframe-resizer&from=2014-12-31)
-[![](https://data.jsdelivr.com/v1/package/npm/iframe-resizer/badge?style=rounded)](https://www.jsdelivr.com/package/npm/iframe-resizer)
-[![Coverage Status](https://coveralls.io/repos/davidjbradshaw/iframe-resizer/badge.svg?branch=master&service=github)](https://coveralls.io/github/davidjbradshaw/iframe-resizer)
-[![Donate](https://img.shields.io/badge/Donate-PayPal-blue.svg)](https://www.paypal.me/davidjbradshaw)
-
-This library enables the automatic resizing of the height and width of both same and cross domain iFrames to fit their contained content. It provides a range of features to address the most common issues with using iFrames, these include:
-
-- Height and width resizing of the iFrame to content size.
-- Works with multiple and nested iFrames.
-- Domain authentication for cross domain iFrames.
-- Provides a range of page size calculation methods to support complex CSS layouts.
-- Detects changes to the DOM that can cause the page to resize using [MutationObserver](https://developer.mozilla.org/en/docs/Web/API/MutationObserver).
-- Detects events that can cause the page to resize (Window Resize, CSS Animation and Transition, Orientation Change and Mouse events).
-- Simplified messaging between iFrame and host page via [postMessage](https://developer.mozilla.org/en-US/docs/Web/API/window.postMessage).
-- Fixes in page links in iFrame and supports links between the iFrame and parent page.
-- Provides custom sizing and scrolling methods.
-- Exposes parent position and viewport size to the iFrame.
-- Provides `onMouseEnter` and `onMouseLeave` events for the iFrame.
-- Works with [ViewerJS](http://viewerjs.org/) to support PDF and ODF documents.
-- Supports IE 11 ([V3 supports back to IE8](https://github.com/davidjbradshaw/iframe-resizer/tree/V3))
-
-## Donate
-
-Iframe-resizer is the result of many 100s of hours of work, if you would like to join others in showing support for the continued development of this project, then please feel free to buy me a coffee.
-
-<a href="https://www.buymeacoffee.com/davidjbradshaw " target="_blank"><img src="https://www.buymeacoffee.com/assets/img/custom_images/yellow_img.png" alt="Buy Me A Coffee" style="height: auto !important;width: auto !important;" ></a>
-
-## Getting Started
-
-### Install
-
-This package can be installed via NPM (`npm install iframe-resizer --save`).
-
-### Usage
-
-The package contains two minified JavaScript files in the [js](https://github.com/davidjbradshaw/iframe-resizer/tree/master/js) folder. The first ([iframeResizer.min.js](https://raw.githubusercontent.com/davidjbradshaw/iframe-resizer/master/js/iframeResizer.min.js)) is for the page hosting the iFrames. It can be called with via JavaScript:
-
-```js
-const iframes = iFrameResize( [{options}], [css selector] || [iframe] );
-```
-
-The second file ([iframeResizer.contentWindow.min.js](https://raw.github.com/davidjbradshaw/iframe-resizer/master/js/iframeResizer.contentWindow.min.js)) needs placing in the page(s) contained within your iFrame. <i>This file is designed to be a guest on someone else's system, so has no dependencies and won't do anything until it's activated by a message from the containing page</i>.
-
-### Typical setup
-
-The normal configuration is to have the iFrame resize when the browser window changes size or the content of the iFrame changes. To set this up you need to configure one of the dimensions of the iFrame to a percentage and tell the library to only update the other dimension. Normally you would set the width to 100% and have the height scale to fit the content.
-
-```html
-<style>
-  iframe {
-    width: 1px;
-    min-width: 100%;
-  }
-</style>
-<script src="/js/iframeResizer.min.js"></script>
-<iframe id="myIframe" src="http://anotherdomain.com/iframe.html"></iframe>
-<script>
-  iFrameResize({ log: true }, '#myIframe')
-</script>
-```
-
-**Note:** Using _min-width_ to set the width of the iFrame, works around an issue in iOS that can prevent the iFrame from sizing correctly.
-
-If you have problems, check the [troubleshooting](https://github.com/davidjbradshaw/iframe-resizer/blob/master/docs/troubleshooting.md) section.
-
-### Example
-
-To see this working take a look at this [example](http://davidjbradshaw.com/iframe-resizer/example/) and watch the [console](https://developer.mozilla.org/en-US/docs/Tools/Web_Console).
-
-## API Documentation
-
-IFrame-Resizer provides an extensive range of options and APIs for both the parent page and the iframed page.
-
-- **Parent Page API**
-  - [Options](https://github.com/davidjbradshaw/iframe-resizer/blob/master/docs/parent_page/options.md)
-  - [Events](https://github.com/davidjbradshaw/iframe-resizer/blob/master/docs/parent_page/events.md)
-  - [Methods](https://github.com/davidjbradshaw/iframe-resizer/blob/master/docs/parent_page/methods.md)
-- **IFramed Page API**
-  - [Options](https://github.com/davidjbradshaw/iframe-resizer/blob/master/docs/iframed_page/options.md)
-  - [Events](https://github.com/davidjbradshaw/iframe-resizer/blob/master/docs/iframed_page/events.md)
-  - [Methods](https://github.com/davidjbradshaw/iframe-resizer/blob/master/docs/iframed_page/methods.md)
-- **Use with Libraries and Frameworks**
-  - [React](https://github.com/davidjbradshaw/iframe-resizer-react)
-  - [Vue](https://github.com/davidjbradshaw/iframe-resizer/blob/master/docs/use_with/vue.md)
-  - [Nuxt](https://github.com/davidjbradshaw/iframe-resizer/issues/831#issuecomment-665760332)
-  - [Angular](https://github.com/davidjbradshaw/iframe-resizer/issues/478#issuecomment-347958630)
-  - [Ember](https://github.com/alexlafroscia/ember-iframe-resizer-modifier)
-  - [jQuery](https://github.com/davidjbradshaw/iframe-resizer/blob/master/docs/use_with/jquery.md)
-  - [Google Apps Script](https://stackoverflow.com/a/65724113/2087070)
-- [Troubleshooting](https://github.com/davidjbradshaw/iframe-resizer/blob/master/docs/troubleshooting.md)
-- [Upgrade from version 3](https://github.com/davidjbradshaw/iframe-resizer/blob/master/docs/upgrade.md)
-- [Version history](https://github.com/davidjbradshaw/iframe-resizer/blob/master/CHANGELOG.md)
-
-## License
-
-Copyright &copy; 2013-21 [David J. Bradshaw](https://github.com/davidjbradshaw) -
-Licensed under the [MIT License](LICENSE)
-
-<!--
-[![NPM](https://nodei.co/npm/iframe-resizer.png?downloads=true&downloadRank=true&stars=true)](https://nodei.co/npm/iframe-resizer/)
-
-[![Build Status](https://travis-ci.org/davidjbradshaw/iframe-resizer.svg?branch=master)](https://travis-ci.org/davidjbradshaw/iframe-resizer)
-[![Known Vulnerabilities](https://snyk.io/test/github/davidjbradshaw/iframe-resizer/badge.svg)](https://snyk.io/test/github/davidjbradshaw/iframe-resizer)
+[![](https://data.jsdelivr.com/v1/package/npm/iframe-resizer/badge?style=rounded)](https://www.jsdelivr.com/package/npm/iframe-resizer) 
 -->
+
+## Introduction
+
+The _[iframe-resizer](https://iframe-resizer.com)_ library aims to take away the pain
+points with using iframes. It will resize your iframe to match the size of your content
+and then monitors the iframe to ensure that it is remains the perfect size.
+
+### Reliable Resizing
+
+Modern browsers are still unable to provide a single consistently reliable method to calculate
+page content size. Therefore _iframe-resizer_ automatically inspects your page and selects the
+best value for your page size from a range DOM values and _iframe-resizer's_ own custom content
+size calculation algorithm.
+
+### Cross Domain
+
+Supports both internal (same-domain) and external (cross-domain) iframes via a simple
+JS file that is designed to be a zero impact guest on the sites hosting it.
+
+### Lightening Performance
+
+To ensure minimal impact on your site, _iframe-resizer_ is highly optimised and
+utilizes _[Set Theory](https://en.wikipedia.org/wiki/Set_theory)_ to ensure it only
+checks the page elements that effect the sizing of your iframes.
+
+Even on the most complex pages, _iframe-resizer_ can detect changes to both HTML
+and CSS, calculate the revised content dimensions and update the iframe in sub
+millisecond time.
+
+### Setup
+
+Please see the **_[iframe-resizer](https://iframe-resizer.com)_** website for setup guides
+and API documentation. This includes versions for:
+
+* **[Vanilla JS](https://iframe-resizer.com/setup)**
+* **[React](https://iframe-resizer.com/frameworks/react)**
+* **[Vue](https://iframe-resizer.com/frameworks/vue3)**
+* **[Angular](https://iframe-resizer.com/frameworks/angular)**
+* **[jQuery](https://iframe-resizer.com/frameworks/jquery)**
+
+Along with setup guides for:
+  
+* **[Wordpress](https://iframe-resizer.com/guides/wordpress/)**
+* **[Google Apps Script](https://iframe-resizer.com/guides/google_apps_script)**
+
+Their is also an [API](https://iframe-resizer.com/frameworks/api/) to support the creation
+of additional custom components.
+
+### Extended API
+
+Additionally _iframe-resizer_ provides a range of missing browser API features, that allows you to securely integrate your iframe content with the parent page.
+
+- Scroll the parent page, [relative to the iframe](https://iframe-resizer.com/api/child#scrolltooffsetx-y) or [parent page's position](https://iframe-resizer.com/api/child#scrollbyx-y)
+- Provides details of the [position of the iframe](https://iframe-resizer.com/api/child#getparentpropscallback), the [scroll position](https://iframe-resizer.com/api/child#getparentpropscallback) and [viewport](https://iframe-resizer.com/api/child#getparentpropscallback) of the parent page
+- Fixes [in page linking](https://iframe-resizer.com/api/parent#inpagelinks) in the iframe and allows links to propagate to the parent page
+- Adds [`onMouseEnter`](https://iframe-resizer.com/api/parent#onmouseenter) and [`onMouseLeave`](https://iframe-resizer.com/api/parent#onmouseleave) events to the iframe element
+- Simplified message passing between the [iframe](https://iframe-resizer.com/api/child#onmessage) and the [parent](https://iframe-resizer.com/api/parent#onmessage) page
+- Automatic domain authentication
+- Enhanced [Accessibility](https://iframe-resizer.com/accessibility)
+
+When combined with [viewer.js](https://viewerjs.org/) it can even resize iframes containing PDF and ODF documents.
+
+## Version 5
+
+This version of iframe-resizer has been extensively rewritten to use modern browser APIs, this has enabled significantly better performance and greater accuracy in the detection of content resizing events.
+
+With this release, the opportunity has been taken to refresh and simplify the API, if you are coming from a previous version then their is an [Upgrade Guide](https://iframe-resizer.com/upgrade) to explain the changes.
+
+---
+[<img align="right" src="https://badge.fury.io/js/@iframe-resizer%2Fcore.svg" alt="NPM" />](https://badge.fury.io/js/@iframe-resizer%2Fparent)
+Copyright &copy; 2013-25 [David J. Bradshaw](https://github.com/davidjbradshaw)

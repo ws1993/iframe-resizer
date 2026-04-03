@@ -1,25 +1,43 @@
-/* jshint undef: false, unused: true */
+define(['iframeResizerJquery', 'jquery'], (iframeResize, $) => {
+  describe('iFrame init(jQuery)', () => {
+    let iframe
 
-'use strict'
-
-define(['iframeResizer', 'jquery'], function(iFrameResize, $) {
-  describe('iFrame init(jQuery)', function() {
-    var iframe
-
-    beforeAll(function() {
+    beforeEach(() => {
       loadIFrame('iframe600.html')
-
-      var $iframes = $('iframe').iFrameResize()
-
-      iframe = $iframes.get(0)
+      iframe = $('iframe')[0]
     })
 
-    afterAll(function() {
+    afterEach(() => {
       tearDown(iframe)
     })
 
-    it('should create iFrameResizer object', function() {
-      expect(iframe.iFrameResizer).toBeDefined()
+    it('is callable', () => {
+      $(iframe).iframeResize({
+        license: 'GPLv3',
+        log: true,
+        warningTimeout: 100,
+        checkOrigin: false,
+      })
+    })
+
+    it('should create iframeResizer object', (done) => {
+      let finished = false
+
+      $(iframe).iframeResize({
+        license: 'GPLv3',
+        log: true,
+        warningTimeout: 1000,
+        checkOrigin: false,
+        onReady: (iframe) => {
+          if (finished) return
+          finished = true
+          expect(iframe.iframeResizer).toBeDefined()
+          done()
+        },
+      })
+
+      // Mock the init message from child
+      mockMsgFromIFrame(iframe, 'init')
     })
   })
 })
